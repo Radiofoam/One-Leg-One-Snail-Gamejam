@@ -5,15 +5,12 @@ using UnityEngine.UI;
 
 public class transitionGameplay : MonoBehaviour
 {
-    public Image fadeImage; // Fullscreen black UI Image
+    public Image fadeImage;
     public float fadeDuration = 1f;
-    public CameraSwitcher cameraSwitcher; // Reference to camera switcher
-
     private bool isTransitioning = false;
 
     void Start()
     {
-        // Ensure image is fully transparent at start
         if (fadeImage != null)
         {
             Color c = fadeImage.color;
@@ -22,13 +19,10 @@ public class transitionGameplay : MonoBehaviour
         }
     }
 
-    void Update()
+    public void BeginFadeAndLoad()
     {
-        // Wait for camera switch to be completed
-        if (!isTransitioning && cameraSwitcher != null && cameraSwitcher.HasSwitched())
-        {
+        if (!isTransitioning)
             StartCoroutine(FadeAndLoad());
-        }
     }
 
     IEnumerator FadeAndLoad()
