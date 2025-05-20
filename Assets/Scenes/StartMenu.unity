@@ -909,6 +909,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 343228656}
   m_CullTransparentMesh: 1
+--- !u!4 &420307921 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6223201445131398391, guid: 76d948d1a680a0f41820e73d85ef2cb6, type: 3}
+  m_PrefabInstance: {fileID: 5422038869750424096}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &444837399
 GameObject:
   m_ObjectHideFlags: 0
@@ -1046,13 +1051,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 444837399}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bdf4b47cf97a47478dd846bd440abbb, type: 3}
+  m_Script: {fileID: 11500000, guid: 175be090e050fa44d9c1be931ca649e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   vCam1: {fileID: 1737546197}
   vCam2: {fileID: 656652739}
   explodeButtonGroup: {fileID: 1355408793}
   anyToContinue: {fileID: 865874563}
+  letMeInText: {fileID: 1372742647}
   postBlendDelay: 0.5
 --- !u!1 &458461221
 GameObject:
@@ -1977,6 +1983,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 999865549}
+  - {fileID: 420307921}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 369.4, z: 0}
 --- !u!1 &691667369
@@ -2987,7 +2994,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSounds:
   - name: Theme
-    clip: {fileID: 8300000, guid: d431668b56f20fa45ba6e41733f62e41, type: 3}
+    clip: {fileID: 8300000, guid: e6181eb6c847c574d86e056964924d87, type: 3}
   sfxSounds:
   - name: Boom
     clip: {fileID: 8300000, guid: 2efe6e53c11945e40a9023be0cc0fb6e, type: 3}
@@ -3463,11 +3470,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: d431668b56f20fa45ba6e41733f62e41, type: 3}
+  m_audioClip: {fileID: 8300000, guid: e6181eb6c847c574d86e056964924d87, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -3872,6 +3879,7 @@ MonoBehaviour:
   fadeImage: {fileID: 544081677}
   fadeDuration: 1
   liarText: {fileID: 723773486}
+  beer: {fileID: 1572084162}
 --- !u!114 &1238865344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6009,6 +6017,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2140197186}
   m_CullTransparentMesh: 1
+--- !u!1001 &5422038869750424096
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 656652740}
+    m_Modifications:
+    - target: {fileID: 6223201445131398391, guid: 76d948d1a680a0f41820e73d85ef2cb6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.27
+      objectReference: {fileID: 0}
+    - target: {fileID: 6223201445131398391, guid: 76d948d1a680a0f41820e73d85ef2cb6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6223201445131398391, guid: 76d948d1a680a0f41820e73d85ef2cb6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 6223201445131398391, guid: 76d948d1a680a0f41820e73d85ef2cb6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.70472914
+      objectReference: {fileID: 0}
+    - target: {fileID: 6223201445131398391, guid: 76d948d1a680a0f41820e73d85ef2cb6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.70472914
+      objectReference: {fileID: 0}
+    - target: {fileID: 6223201445131398391, guid: 76d948d1a680a0f41820e73d85ef2cb6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.05793905
+      objectReference: {fileID: 0}
+    - target: {fileID: 6223201445131398391, guid: 76d948d1a680a0f41820e73d85ef2cb6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.05793905
+      objectReference: {fileID: 0}
+    - target: {fileID: 6223201445131398391, guid: 76d948d1a680a0f41820e73d85ef2cb6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 6223201445131398391, guid: 76d948d1a680a0f41820e73d85ef2cb6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6223201445131398391, guid: 76d948d1a680a0f41820e73d85ef2cb6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8474216440986330226, guid: 76d948d1a680a0f41820e73d85ef2cb6, type: 3}
+      propertyPath: m_Name
+      value: Explosion
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 76d948d1a680a0f41820e73d85ef2cb6, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
