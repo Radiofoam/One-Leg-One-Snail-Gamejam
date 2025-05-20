@@ -12,12 +12,11 @@ public class TrustTier3Handler : MonoBehaviour
     public float fadeDuration = 1f;
     public TextMeshProUGUI liarText; // Reference to "LIAR" text
     public GameObject beer; // Reference to "Beer" GameObject
+    public ParticleSystem explosion; // Particle explosion reference
+    public FinalMessageMonologue monologueHandler; // Assign in Inspector
 
     void Awake()
     {
-        if (finalMessage != null)
-            finalMessage.SetActive(false);
-
         if (liarText != null)
             liarText.gameObject.SetActive(false);
 
@@ -27,6 +26,9 @@ public class TrustTier3Handler : MonoBehaviour
             c.a = 0f;
             fadeImage.color = c;
         }
+
+        if (explosion != null)
+            explosion.gameObject.SetActive(false); // Hide explosion initially
     }
 
     public void OnCorrectPressed()
@@ -35,8 +37,12 @@ public class TrustTier3Handler : MonoBehaviour
             trustTier3.SetActive(false);
 
         if (finalMessage != null)
-            finalMessage.SetActive(true);
+            finalMessage.SetActive(true); // Activate FIRST
+
+        if (monologueHandler != null)
+            monologueHandler.BeginMonologue(); // THEN call coroutine
     }
+
 
     public void OnIncorrectPressed()
     {
@@ -51,6 +57,14 @@ public class TrustTier3Handler : MonoBehaviour
 
     IEnumerator FadeAndLoadGameplay()
     {
+        // Play explosion effect
+        if (explosion != null)
+        {
+            explosion.gameObject.SetActive(true);
+            explosion.Play();
+        }
+
+        // Play SFX
         AudioManager.instance.PlaySFX("Boom", 1f, 0.6f);
         AudioManager.instance.PlaySFX("Wood", 1f, 1.5f);
         AudioManager.instance.PlaySFX("Glass", 1f, 1.3f);

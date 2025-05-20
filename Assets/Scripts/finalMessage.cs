@@ -12,13 +12,7 @@ public class FinalMessageMonologue : MonoBehaviour
     public TextMeshProUGUI beerText; // Assign Beer TextMeshProUGUI in the Inspector
 
     private int currentIndex = 0;
-
-    void Awake()
-    {
-        // Hide the entire monologue parent on Awake
-        if (finalMessageParent != null)
-            finalMessageParent.SetActive(false);
-    }
+    public GameObject retryButton; // Assign in Inspector
 
     void Start()
     {
@@ -35,8 +29,23 @@ public class FinalMessageMonologue : MonoBehaviour
             child.gameObject.SetActive(false);
         }
 
+     
+    }
+    public void BeginMonologue()
+    {
+        if (finalMessageParent != null)
+        {
+            finalMessageParent.SetActive(true); // Enable monologue UI
+            foreach (Transform child in finalMessageParent.transform)
+            {
+                child.gameObject.SetActive(false); // Hide all children initially
+            }
+        }
+
+        currentIndex = 0;
         StartCoroutine(PlayMonologue());
     }
+
 
     IEnumerator PlayMonologue()
     {
@@ -66,10 +75,17 @@ public class FinalMessageMonologue : MonoBehaviour
                 StartCoroutine(FadeToBlack());
             }
 
+            // If it's the last child, show the retry button
+            if (currentIndex == childCount - 1 && retryButton != null)
+            {
+                retryButton.SetActive(true);
+            }
+
             currentIndex++;
             yield return new WaitForSeconds(interval);
         }
     }
+
 
     IEnumerator FadeToBlack()
     {

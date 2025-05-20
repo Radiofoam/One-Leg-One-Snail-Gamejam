@@ -13,6 +13,7 @@ public class TrustTier2Handler : MonoBehaviour
 
     public TextMeshProUGUI triviaText;
     public TextMeshProUGUI beerText;
+    public ParticleSystem explosion; // Particle explosion
 
     void Awake()
     {
@@ -34,6 +35,9 @@ public class TrustTier2Handler : MonoBehaviour
             c.a = 0f;
             fadeImage.color = c;
         }
+
+        if (explosion != null)
+            explosion.gameObject.SetActive(false); // Hide explosion on start
     }
 
     public void OnCorrectPressed()
@@ -61,11 +65,19 @@ public class TrustTier2Handler : MonoBehaviour
 
     IEnumerator FadeAndLoadGameplay()
     {
+        // Play explosion effect
+        if (explosion != null)
+        {
+            explosion.gameObject.SetActive(true);
+            explosion.Play();
+        }
+
+        // Play SFX
         AudioManager.instance.PlaySFX("Boom", 1f, 0.6f);
         AudioManager.instance.PlaySFX("Wood", 1f, 1.5f);
         AudioManager.instance.PlaySFX("Glass", 1f, 1.3f);
 
-        yield return new WaitForSeconds(1.2f); // Delay before fade to let SFX play
+        yield return new WaitForSeconds(1.2f); // Let SFX play before fading
 
         if (fadeImage != null)
         {

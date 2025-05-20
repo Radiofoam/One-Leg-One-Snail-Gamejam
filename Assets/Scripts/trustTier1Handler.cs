@@ -14,6 +14,7 @@ public class TrustTier1 : MonoBehaviour
     public TextMeshProUGUI triviaText;          // "Trivia"
     public TextMeshProUGUI proveYourselfText;   // "Prove yourself"
     public GameObject therapyButtonGroup;       // "TherapyButtonGroup"
+    public ParticleSystem explosion;            // Explosion particle system
 
     void Awake()
     {
@@ -27,7 +28,10 @@ public class TrustTier1 : MonoBehaviour
             proveYourselfText.gameObject.SetActive(false);
 
         if (therapyButtonGroup != null)
-            therapyButtonGroup.SetActive(false); // Hide therapy group on start
+            therapyButtonGroup.SetActive(false);
+
+        if (explosion != null)
+            explosion.gameObject.SetActive(false); // Hide explosion at start
     }
 
     public void OnCorrectClicked()
@@ -42,25 +46,31 @@ public class TrustTier1 : MonoBehaviour
             triviaText.gameObject.SetActive(true);
 
         if (proveYourselfText != null)
-            proveYourselfText.gameObject.SetActive(false); // Hide when tier1 closes
+            proveYourselfText.gameObject.SetActive(false);
     }
 
     public void OnIncorrectClicked()
     {
         if (proveYourselfText != null)
-            proveYourselfText.gameObject.SetActive(false); // Hide on incorrect too
+            proveYourselfText.gameObject.SetActive(false);
 
         StartCoroutine(FadeAndLoadScene());
     }
 
     IEnumerator FadeAndLoadScene()
     {
-        // Play SFX before fading
+        // Play explosion before SFX
+        if (explosion != null)
+        {
+            explosion.gameObject.SetActive(true);
+            explosion.Play();
+        }
+
+        // Play SFX
         AudioManager.instance.PlaySFX("Boom", 1f, 0.6f);
         AudioManager.instance.PlaySFX("Wood", 1f, 1.5f);
         AudioManager.instance.PlaySFX("Glass", 1f, 1.3f);
 
-        // Wait before fade so SFX isn’t cut off
         yield return new WaitForSeconds(1.5f);
 
         // Fade to black
@@ -80,7 +90,6 @@ public class TrustTier1 : MonoBehaviour
             }
         }
 
-        // Load Gameplay scene
         SceneManager.LoadScene("Gameplay");
     }
 }

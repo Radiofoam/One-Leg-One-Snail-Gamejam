@@ -9,6 +9,7 @@ public class StrangerDanger : MonoBehaviour
     public TextMeshProUGUI iSeeText;
     public Image fadeImage; // Fullscreen black UI Image (alpha 0 at start)
     public float fadeDuration = 1f;
+    public ParticleSystem explosion; // Add particle system reference
 
     void Awake()
     {
@@ -21,6 +22,9 @@ public class StrangerDanger : MonoBehaviour
             c.a = 0f;
             fadeImage.color = c;
         }
+
+        if (explosion != null)
+            explosion.gameObject.SetActive(false); // Hide at start
     }
 
     public void OnStrangerDangerClicked()
@@ -33,12 +37,19 @@ public class StrangerDanger : MonoBehaviour
 
     IEnumerator FadeAndLoadScene()
     {
-        // Play SFX (same as in transitionGameplay)
+        // Show and play explosion before SFX
+        if (explosion != null)
+        {
+            explosion.gameObject.SetActive(true);
+            explosion.Play();
+        }
+
+        // Play SFX
         AudioManager.instance.PlaySFX("Boom", 1f, 0.6f);
         AudioManager.instance.PlaySFX("Wood", 1f, 1.5f);
         AudioManager.instance.PlaySFX("Glass", 1f, 1.3f);
 
-        // Wait ~1.5 seconds so the audio isn't cut off
+        // Wait so SFX isn't cut off
         yield return new WaitForSeconds(1.5f);
 
         // Fade to black
