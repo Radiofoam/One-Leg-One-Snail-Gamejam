@@ -29,6 +29,16 @@ public class snailMovement : MonoBehaviour
                     currentSpeed = maxSpeed;
                     currentPhase = Phase.MaxSpeed;
                     maxSpeedTimer = 0f;
+
+                    // Random pitch (±3 semitones): from 0.89 to 1.12 approx
+                    int semitones = Random.Range(-16, 10); // pitch
+                    float pitch = Mathf.Pow(1.059463f, semitones); // Equal temperament formula
+
+                    // Random volume between 0.8 and 1.0
+                    float volume = Random.Range(0.7f, 1.0f);
+
+                    AudioManager.instance.PlaySFX("Trail", pitch, volume);
+
                 }
                 break;
 

@@ -27,6 +27,9 @@ public class transitionGameplay : MonoBehaviour
 
     IEnumerator FadeAndLoad()
     {
+        AudioManager.instance.PlaySFX("Boom", 1f, 0.6f);
+        AudioManager.instance.PlaySFX("Wood", 1f, 1.5f);
+        AudioManager.instance.PlaySFX("Glass", 1f, 1.3f);
         isTransitioning = true;
 
         float timer = 0f;

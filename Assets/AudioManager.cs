@@ -29,12 +29,41 @@ public class AudioManager : MonoBehaviour
     public void PlayMusic(string name)
     {
         Sound s = Array.Find(musicSounds, x => x.name == name);
+        if (s == null)
+        {
+            Debug.LogWarning("Music sound not found: " + name);
+            return;
+        }
+
         musicSource.clip = s.clip;
         musicSource.Play();
     }
-    public void PlaySFX(string name)
+    public Sound GetSFX(string name)
+    {
+        return Array.Find(sfxSounds, x => x.name == name);
+    }
+
+    public void PlaySFX(string name, float pitch = 1f, float volume = 1f)
     {
         Sound s = Array.Find(sfxSounds, x => x.name == name);
-        sfxSource.PlayOneShot(s.clip);
+        if (s == null)
+        {
+            Debug.LogWarning($"Sound not found: {name}");
+            return;
+        }
+
+        // Create a temporary GameObject
+        GameObject tempGO = new GameObject("TempAudio");
+        AudioSource tempSource = tempGO.AddComponent<AudioSource>();
+
+        tempSource.clip = s.clip;
+        tempSource.volume = volume;
+        tempSource.pitch = pitch;
+        tempSource.Play();
+
+        Destroy(tempGO, s.clip.length / pitch); // Cleanup after playback
     }
+
+
+
 }
