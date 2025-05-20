@@ -5,7 +5,7 @@ public class noButton : MonoBehaviour
     public GameObject therapyButtonGroup;
     public GameObject explodeButtonGroup;
 
-    void Start()
+    void Awake()
     {
         if (therapyButtonGroup != null)
         {

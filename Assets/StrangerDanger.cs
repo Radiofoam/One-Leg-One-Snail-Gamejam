@@ -1,16 +1,26 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using System.Collections;
 
 public class StrangerDanger : MonoBehaviour
 {
     public TextMeshProUGUI iSeeText;
-    public float delayBeforeLoad = 1.2f;
+    public Image fadeImage; // Fullscreen black UI Image (alpha 0 at start)
+    public float fadeDuration = 1f;
 
-    void Start()
+    void Awake()
     {
         if (iSeeText != null)
             iSeeText.gameObject.SetActive(false);
+
+        if (fadeImage != null)
+        {
+            Color c = fadeImage.color;
+            c.a = 0f;
+            fadeImage.color = c;
+        }
     }
 
     public void OnStrangerDangerClicked()
@@ -18,12 +28,25 @@ public class StrangerDanger : MonoBehaviour
         if (iSeeText != null)
             iSeeText.gameObject.SetActive(true);
 
-        // Load scene after a short delay (optional)
-        Invoke(nameof(LoadGameplay), delayBeforeLoad);
+        StartCoroutine(FadeAndLoadScene());
     }
 
-    void LoadGameplay()
+    IEnumerator FadeAndLoadScene()
     {
+        if (fadeImage != null)
+        {
+            float timer = 0f;
+            Color c = fadeImage.color;
+
+            while (timer < fadeDuration)
+            {
+                timer += Time.deltaTime;
+                c.a = Mathf.Clamp01(timer / fadeDuration);
+                fadeImage.color = c;
+                yield return null;
+            }
+        }
+
         SceneManager.LoadScene("Gameplay");
     }
 }
