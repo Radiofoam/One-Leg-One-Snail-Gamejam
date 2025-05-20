@@ -20,6 +20,7 @@ public class CameraSwitcher : MonoBehaviour
     private CinemachineBrain brain;
     private readonly string[] transitionSFX = { "Burn", "Ambulance" };
     private List<AudioSource> loopingSources = new List<AudioSource>();
+    public GameObject quitButton; // <-- Add this
 
     void Start()
     {
@@ -61,15 +62,20 @@ public class CameraSwitcher : MonoBehaviour
 
     void Update()
     {
-        if (!switchTriggered && Input.anyKeyDown)
+        if (!switchTriggered && Input.GetKeyDown(KeyCode.Return)) // Only Enter key
         {
             switchTriggered = true;
+
             if (anyToContinue != null)
                 anyToContinue.SetActive(false);
+
+            if (quitButton != null)
+                quitButton.SetActive(false); // Hide Quit button when Enter pressed
 
             StartCoroutine(HandleCameraSwitch());
         }
     }
+
 
     private IEnumerator HandleCameraSwitch()
     {
