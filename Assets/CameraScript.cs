@@ -10,9 +10,13 @@ public class CameraScript : MonoBehaviour
     [SerializeField] private Transform camTarget;
     [SerializeField] private float speed;
 
+    private float fov;
+    [SerializeField] private float sensitivity;
+
     void Start()
     {
         camTransform = transform;
+        fov = 40;
     }
 
     void Update()
@@ -25,7 +29,7 @@ public class CameraScript : MonoBehaviour
             camTransform.RotateAround(camTarget.position, camTransform.right, -Input.GetAxis("Mouse Y") * speed);
         }
 
+        fov -= Input.GetAxis("Mouse ScrollWheel") * sensitivity;
+        Camera.main.fieldOfView = fov;
     }
-
-
 }

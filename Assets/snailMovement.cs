@@ -51,5 +51,6 @@ public class snailMovement : MonoBehaviour
         }
 
         transform.Translate(direction * currentSpeed * Time.deltaTime, Space.World);
+        transform.LookAt(player.position);
     }
 }
