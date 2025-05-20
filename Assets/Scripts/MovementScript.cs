@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MovementScript : MonoBehaviour
@@ -12,25 +14,52 @@ public class MovementScript : MonoBehaviour
 
     private Vector3 screenPoint;
     private Vector3 offset;
+    private Vector3 originalFootTransform;
 
+    private bool isHipLock;
+    [SerializeField] private Transform rigHip;
+    [SerializeField] private TextMeshProUGUI hipUI;
+
+    private void Start()
+    {
+        isHipLock = false;
+
+        hipUI.text = "Hip: " + (isHipLock ? "Locked" : "Free");
+    }
     private void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            isHipLock = !isHipLock;
+            changeHipLock();
+        }
+    }
+
+    void changeHipLock()
+    {
+        if(isHipLock)
+        {
+            print("lock hip");
+            rigHip.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            
+        }
+        else
+        {
+            print("free hip");
+            //rigHip.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            //rigHip.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
+        }
+
+        hipUI.text = "Hip: " + (isHipLock ? "Locked" : "Free");
     }
 
     private void OnMouseDown()
     {
-        //print("mouse down");
-        //rb.velocity = camTransform.forward * 100;
-        //ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //if (Physics.Raycast(ray, out hit) && hit.collider.CompareTag("Foot"))
-        //{
-            
-        //}
-
         screenPoint = Camera.main.WorldToScreenPoint(gameObject.transform.position);
 
         offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z));
+
+        originalFootTransform = transform.position;
     }
 
     private void OnMouseDrag()
@@ -38,7 +67,30 @@ public class MovementScript : MonoBehaviour
         Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
 
         Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint) + offset;
-        transform.position = new Vector3(curPosition.x, Mathf.Clamp(curPosition.y, curPosition.y, transform.position.y + 1f), curPosition.z);
+
+        //transform.position = Vector3.ClampMagnitude(new Vector3(curPosition.x, curPosition.y, curPosition.z), 4);
+
+        //transform.position = Vector3.MoveTowards(originalFootTransform, curPosition, 4);
+
+        //rb.velocity = (Vector3.ClampMagnitude(curPosition, 4) - rb.position) * 5;
+
+        if (!isHipLock)
+        {
+            //rb.MovePosition(curPosition);
+            //transform.position = Vector3.ClampMagnitude(new Vector3(curPosition.x, curPosition.y, curPosition.z), 4);
+
+            rb.velocity = (Vector3.ClampMagnitude(curPosition, 4) - rb.position) * 5;
+
+            rigHip.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            rigHip.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
+        }
+        else
+        {
+            rb.velocity = (Vector3.ClampMagnitude(curPosition, 4) - rb.position) * 5;
+
+            rigHip.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        }
+        
 
     }
 
